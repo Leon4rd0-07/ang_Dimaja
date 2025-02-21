@@ -1,0 +1,13 @@
+<div class="login-container">
+  <h2>DIMAJA</h2>
+  <div class="input-container">
+    <i class="bi bi-person-circle"></i>
+    <input type="text" [(ngModel)]="username" placeholder="Usuario">
+  </div>
+  <div class="input-container">
+    <i class="bi bi-shield-lock-fill"></i>
+    <input type="password" [(ngModel)]="password" placeholder="Contraseña">
+  </div>
+  <button (click)="onLogin()">Ingresar</button>
+</div>
+
