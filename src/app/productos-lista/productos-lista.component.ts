@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Productos } from '../modelo/productos';
 import { ProductosService } from '../service/productos.service';
+import { ToastrService } from 'ngx-toastr'; // Importar ToastrService
 
 @Component({
   selector: 'app-productos-lista',
@@ -12,9 +13,9 @@ export class ProductosListaComponent implements OnInit {
   productos: Productos[] = [];
   categorias: any[] = [];
   selectedCategoria: any = '';
-  nuevoProducto: Productos = new Productos(); // Nuevo producto para agregar
+  nuevoProducto: Productos = new Productos();
 
-  constructor(private productoServicio: ProductosService) {}
+  constructor(private productoServicio: ProductosService, private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerProductos();
@@ -37,13 +38,13 @@ export class ProductosListaComponent implements OnInit {
     this.productoServicio.agregarProducto(this.nuevoProducto).subscribe({
       next: (data) => {
         console.log('Producto agregado:', data);
-        alert('Producto agregado exitosamente');
-        this.obtenerProductos(); // Recargar la lista de productos
-        this.nuevoProducto = new Productos(); // Resetear el formulario
+        this.toastr.success('Producto agregado exitosamente', 'Éxito'); // Mostrar alerta
+        this.obtenerProductos();
+        this.nuevoProducto = new Productos();
       },
       error: (err) => {
         console.error('Error al agregar producto:', err);
-        alert('Error al agregar el producto');
+        this.toastr.error('Error al agregar el producto', 'Error'); // Mostrar error
       },
     });
   }
