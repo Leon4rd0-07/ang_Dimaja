@@ -10,12 +10,12 @@ export class ProductosService {
 
   //1. Crear la url Base para productos
   private urlBase = "http://localhost:8080/dimaja-app/productos";
-  
+
   //2. Crear la url Base para categorías
   private urlCategorias = "http://localhost:8080/dimaja-app/categorias";
 
   //3. Creando el constructor
-  constructor(private clienteHttp: HttpClient) {}
+  constructor(private clienteHttp: HttpClient) { }
 
   //4. Definir método para obtener Lista de productos
   obtenerProductosLista(): Observable<Productos[]> {
@@ -31,4 +31,11 @@ export class ProductosService {
   agregarProducto(producto: Productos): Observable<Productos> {
     return this.clienteHttp.post<Productos>(this.urlBase, producto);
   }
+
+  //7. Método para eliminar un producto por ID
+  eliminarProducto(id: number): Observable<void> {
+    const url = `${this.urlBase}/${id}`; // Construye la URL con el ID
+    return this.clienteHttp.delete<void>(url);
+  }
+
 }

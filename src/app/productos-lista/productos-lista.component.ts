@@ -15,7 +15,7 @@ export class ProductosListaComponent implements OnInit {
   selectedCategoria: any = '';
   nuevoProducto: Productos = new Productos();
 
-  constructor(private productoServicio: ProductosService, private toastr: ToastrService) {}
+  constructor(private productoServicio: ProductosService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.obtenerProductos();
@@ -53,4 +53,18 @@ export class ProductosListaComponent implements OnInit {
     const categoria = this.categorias.find((c) => c.id_categorias === id);
     return categoria ? categoria.nombre_categoria : 'Desconocida';
   }
+
+  eliminarProducto(id: number) {
+    if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+      this.productoServicio.eliminarProducto(id).subscribe({
+        next: () => {
+          this.productos = this.productos.filter(producto => producto.id_productos !== id);
+        },
+        error: (error) => {
+          console.error("Error al eliminar el producto", error);
+        }
+      });
+    }
+  }
+
 }
