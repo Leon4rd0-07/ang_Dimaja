@@ -27,9 +27,9 @@ import { ProductosListaComponent } from './productos-lista/productos-lista.compo
     NavbarComponent,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-top-right',
-      timeOut: 3000,
-      preventDuplicates: true
+    positionClass: 'toast-top-right',
+    timeOut: 3000,
+    preventDuplicates: true
     })
   ],
   providers: [],

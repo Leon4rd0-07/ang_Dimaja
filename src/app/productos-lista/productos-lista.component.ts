@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Productos } from '../modelo/productos';
 import { ProductosService } from '../service/productos.service';
 import { ToastrService } from 'ngx-toastr'; // Importar ToastrService
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-productos-lista',
@@ -55,16 +57,28 @@ export class ProductosListaComponent implements OnInit {
   }
 
   eliminarProducto(id: number) {
-    if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
-      this.productoServicio.eliminarProducto(id).subscribe({
-        next: () => {
-          this.productos = this.productos.filter(producto => producto.id_productos !== id);
-        },
-        error: (error) => {
-          console.error("Error al eliminar el producto", error);
-        }
-      });
-    }
-  }
-
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará el producto de forma permanente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productoServicio.eliminarProducto(id).subscribe({
+          next: () => {
+            this.productos = this.productos.filter(producto => producto.id_productos !== id);
+            this.toastr.success('Producto eliminado exitosamente', 'Éxito');
+          },
+          error: (error) => {
+            console.error('Error al eliminar el producto', error);
+            this.toastr.error('Error al eliminar el producto', 'Error');
+          }
+        });
+      }
+    });
+  }  
 }

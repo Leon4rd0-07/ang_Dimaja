@@ -34,8 +34,6 @@ export class ProductosService {
 
   //7. Método para eliminar un producto por ID
   eliminarProducto(id: number): Observable<void> {
-    const url = `${this.urlBase}/${id}`; // Construye la URL con el ID
-    return this.clienteHttp.delete<void>(url);
+    return this.clienteHttp.delete<void>(`${this.urlBase}/${id}`);
   }
-
 }
