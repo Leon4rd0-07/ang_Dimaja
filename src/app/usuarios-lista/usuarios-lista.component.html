@@ -1,102 +1,120 @@
 <app-navbar></app-navbar>
 <!-- Contenedor principal -->
-<div class="container-fluid p-3 bg-white" style= " margin-left: 250px; overflow-x: hidden; max-width: 82%;">
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="text-center text-uppercase fw-bold m-0" style="color: #0A2647;">
-        Todos los Usuarios
-    </h2>
-    <!-- Botón para abrir el modal con el mismo color del encabezado -->
-    <button class="btn text-white fw-bold px-4 py-2" data-bs-toggle="modal" data-bs-target="#modalAgregarUsuario"
-        style="background: linear-gradient(135deg, #0A2647, #144272); border-radius: 8px;">
-        + Agregar Usuario
-    </button>
-</div>
-
-<div class="container-fluid p-3 bg-white">
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered text-center align-middle w-100">
-            <thead class="table-dark text-white">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nombres</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Password</th>
-                    <th scope="col">DNI</th>
-                    <th scope="col">Rol</th>
-                </tr>
-            </thead>
-            <tbody class="table-light">
-                <tr *ngFor="let usuario of usuarios">
-                    <td>{{ usuario.id_usuarios }}</td>
-                    <td>{{ usuario.nombres }}</td>
-                    <td>{{ usuario.correo }}</td>
-                    <td>{{ usuario.usuario }}</td>
-                    <td>{{ usuario.password }}</td>
-                    <td>{{ usuario.dni }}</td>
-                    <td>{{ getRoleName(usuario.id_rol) }}</td>
-                </tr>
-            </tbody>
-        </table>
+<div class="container-fluid p-3 bg-white" style=" margin-left: 250px; overflow-x: hidden; max-width: 82%;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-center text-uppercase fw-bold m-0" style="color: #0A2647;">
+            Todos los Usuarios
+        </h2>
+        <!-- Botón para abrir el modal con el mismo color del encabezado -->
+        <button class="btn text-white fw-bold px-4 py-2" data-bs-toggle="modal" data-bs-target="#modalAgregarUsuario"
+            style="background: linear-gradient(135deg, #0A2647, #144272); border-radius: 8px;">
+            + Agregar Usuario
+        </button>
     </div>
-</div>
 
-<!-- Modal mejorado en 2 columnas -->
-<div class="modal fade" id="modalAgregarUsuario" tabindex="-1" aria-labelledby="modalAgregarUsuarioLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content shadow-lg rounded-4">
-            <div class="modal-header text-white text-center" style="background: linear-gradient(135deg, #0A2647, #144272); border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                <h5 class="modal-title w-100" id="modalAgregarUsuarioLabel">Agregar Nuevo Usuario</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-                <form>
-                    <div class="row">
-                        <!-- Columna izquierda -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label fw-bold">Nombres</label>
-                                <input type="text" class="form-control rounded-3 shadow-sm" id="nombre" required>
+    <div class="container-fluid p-3 bg-white">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered text-center align-middle w-100">
+                <thead class="table-dark text-white">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">DNI</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+                    <tr *ngFor="let usuario of usuarios">
+                        <td>{{ usuario.id_usuarios }}</td>
+                        <td>{{ usuario.nombres }}</td>
+                        <td>{{ usuario.correo }}</td>
+                        <td>{{ usuario.usuario }}</td>
+                        <td>{{ usuario.password }}</td>
+                        <td>{{ usuario.dni }}</td>
+                        <td>{{ getRoleName(usuario.id_rol) }}</td>
+                        <td>
+                            <!-- Botón de eliminar con ícono -->
+                            <button class="btn btn-danger btn-sm" (click)="eliminarUsuarios(usuario.id_usuarios!)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal mejorado en 2 columnas -->
+    <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" aria-labelledby="modalAgregarUsuarioLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content shadow-lg rounded-4">
+                <div class="modal-header text-white text-center"
+                    style="background: linear-gradient(135deg, #0A2647, #144272); border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <h5 class="modal-title w-100" id="modalAgregarUsuarioLabel">Agregar Nuevo Usuario</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form (ngSubmit)="guardarUsuarios()">
+                        <div class="row">
+                            <!-- Columna izquierda -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label fw-bold">Nombres</label>
+                                    <input type="text" class="form-control rounded-3 shadow-sm" id="nombre"
+                                        [(ngModel)]="nuevoUsuario.nombres" name="nombre_usuario" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="correo" class="form-label fw-bold">Correo</label>
+                                    <input type="email" class="form-control rounded-3 shadow-sm" id="correo"
+                                        [(ngModel)]="nuevoUsuario.correo" name="correo" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="usuario" class="form-label fw-bold">Usuario</label>
+                                    <input type="text" class="form-control rounded-3 shadow-sm" id="usuario"
+                                        [(ngModel)]="nuevoUsuario.usuario" name="usuario" required>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="correo" class="form-label fw-bold">Correo</label>
-                                <input type="email" class="form-control rounded-3 shadow-sm" id="correo" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario" class="form-label fw-bold">Usuario</label>
-                                <input type="text" class="form-control rounded-3 shadow-sm" id="usuario" required>
+                            <!-- Columna derecha -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="password" class="form-label fw-bold">Contraseña</label>
+                                    <input type="password" class="form-control rounded-3 shadow-sm" id="password"
+                                        [(ngModel)]="nuevoUsuario.password" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="dni" class="form-label fw-bold">DNI</label>
+                                    <input type="text" class="form-control rounded-3 shadow-sm" id="dni"
+                                        [(ngModel)]="nuevoUsuario.dni" name="dni" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rol" class="form-label fw-bold">Rol</label>
+                                    <select class="form-select rounded-3 shadow-sm" id="rol"
+                                        [(ngModel)]="nuevoUsuario.id_rol" name="rol" required name="id_rol">
+                                        <option value="">Seleccione un rol</option>
+                                        <option *ngFor="let role of roles" [value]="role.id_rol">{{ role.nombre_rol }}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <!-- Columna derecha -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="password" class="form-label fw-bold">Contraseña</label>
-                                <input type="password" class="form-control rounded-3 shadow-sm" id="password" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="dni" class="form-label fw-bold">DNI</label>
-                                <input type="text" class="form-control rounded-3 shadow-sm" id="dni" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="rol" class="form-label fw-bold">Rol</label>
-                                <select class="form-select rounded-3 shadow-sm" id="rol" required name="id_rol">
-                                  <option value="">Seleccione un rol</option>
-                                  <option *ngFor="let role of roles" [value]="role.id_rol">{{ role.nombre_rol }}</option>
-                                </select>
-                            </div>                              
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit"
+                                class="btn btn-success fw-bold rounded-3 shadow-sm me-2">Guardar</button>
+                            <button type="button" class="btn btn-danger fw-bold rounded-3 shadow-sm"
+                                data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-end mt-3">
-                        <button type="submit" class="btn btn-success fw-bold rounded-3 shadow-sm me-2">Guardar</button>
-                        <button type="button" class="btn btn-danger fw-bold rounded-3 shadow-sm" data-bs-dismiss="modal">
-                            Cancelar
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-
-
