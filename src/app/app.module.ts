@@ -11,13 +11,15 @@ import { UsuariosListaComponent } from './usuarios-lista/usuarios-lista.componen
 import { InicioComponent } from './inicio/inicio.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProductosListaComponent } from './productos-lista/productos-lista.component';
+import { StockComponent } from './stock/stock.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsuariosListaComponent,
     ProductosListaComponent,
-    InicioComponent
+    InicioComponent,
+    StockComponent
   ],
   imports: [
     BrowserModule,
