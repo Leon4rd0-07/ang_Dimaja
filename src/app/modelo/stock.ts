@@ -1,5 +1,5 @@
-export class Stock{
-    id_stock?:number;
-    cantidad :number;
-    id_productos :number;
-}
+export interface Stock {
+    id_stock: number;
+    cantidad: number;
+    idProductos: number; // ✅ Corrección aquí
+  }

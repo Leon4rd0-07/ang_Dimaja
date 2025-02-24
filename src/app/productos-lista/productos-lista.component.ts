@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Productos } from '../modelo/productos';
 import { ProductosService } from '../service/productos.service';
-import { ToastrService } from 'ngx-toastr'; // Importar ToastrService
+import { ToastrService } from 'ngx-toastr'; 
 import Swal from 'sweetalert2';
 
 

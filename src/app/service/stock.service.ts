@@ -19,6 +19,6 @@ export class StockService {
 
   // Método para agregar un nuevo stock
   agregarStock(stock: Stock): Observable<Stock> {
-    return this.clienteHttp.post<Stock>(`${this.urlBase}/agregar`, stock);
-  }
+    return this.clienteHttp.post<Stock>(this.urlBase, stock);
+  }   
 }
