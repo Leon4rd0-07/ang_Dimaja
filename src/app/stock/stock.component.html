@@ -48,7 +48,7 @@
             <div class="modal-body p-4">
                 <form (ngSubmit)="agregarStock()">
                     <div class="mb-3">
-                        <label for="idProducto" class="form-label fw-bold">ID Producto</label>
+                        <label for="idProducto" class="form-label fw-bold">Productos</label>
                         <select class="form-select rounded-3 shadow-sm" id="idProducto"
                             [(ngModel)]="nuevoStock.idProductos" name="idProductos" required>
                             <option *ngFor="let producto of productosLista" [value]="producto.id_productos">
