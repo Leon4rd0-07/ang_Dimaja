@@ -24,4 +24,17 @@ export class UsuariosService {
   obtenerRoles(): Observable<any[]> {
     return this.clienteHttp.get<any[]>(this.urlRoles);
   }
+
+  guardarUsuarios(usuarios: Usuarios): Observable<Usuarios>{
+    return this.clienteHttp.post<Usuarios>(this.urlBase, usuarios);
+
+  }
+
+  eliminarUsuarios(id: number): Observable<void>{
+    return this.clienteHttp.delete<void>(`${this.urlBase}/${id}`);
+  }
+
+
+
+
 }
