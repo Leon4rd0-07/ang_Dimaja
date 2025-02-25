@@ -25,16 +25,16 @@ export class UsuariosService {
     return this.clienteHttp.get<any[]>(this.urlRoles);
   }
 
-  guardarUsuarios(usuarios: Usuarios): Observable<Usuarios>{
+  guardarUsuarios(usuarios: Usuarios): Observable<Usuarios> {
     return this.clienteHttp.post<Usuarios>(this.urlBase, usuarios);
 
   }
 
-  eliminarUsuarios(id: number): Observable<void>{
+  eliminarUsuarios(id: number): Observable<void> {
     return this.clienteHttp.delete<void>(`${this.urlBase}/${id}`);
   }
 
-
-
-
+  actualizarUsuario(usuario: Usuarios): Observable<string> {
+    return this.clienteHttp.put<string>(this.urlBase, usuario);
+  }
 }

@@ -15,6 +15,7 @@ export class UsuariosListaComponent {
   roles: any[] = []; // Variable para almacenar los roles
   selectedRole: any; // Variable para el rol seleccionado
   nuevoUsuario: Usuarios = new Usuarios();
+  usuarioEditar: Usuarios = new Usuarios();
 
   //2. Agregar el constructor
   constructor(private usuariosServicios: UsuariosService, private toastr: ToastrService) { }
@@ -38,7 +39,8 @@ export class UsuariosListaComponent {
       this.roles = roles;
     });
   }
-  //Metodo para agregar un nuevo usuario mi leder de la clase 
+  
+  // Método para agregar un nuevo usuario
   guardarUsuarios() {
     this.usuariosServicios.guardarUsuarios(this.nuevoUsuario).subscribe({
       next: (data) => {
@@ -80,9 +82,6 @@ export class UsuariosListaComponent {
     });
   }  
 
-
-
-
   // Método para manejar la selección de rol
   onRoleChange() {
     console.log('Rol seleccionado:', this.selectedRole);  // Verificar que el rol seleccionado es correcto
@@ -92,5 +91,24 @@ export class UsuariosListaComponent {
   getRoleName(id: number): string {
     const role = this.roles.find(role => role.id_rol === id); // Buscar el rol por id_rol
     return role ? role.nombre_rol : 'Desconocido'; // Si no lo encuentra, devuelve 'Desconocido'
+  }
+
+  // Método para seleccionar el usuario a editar
+  seleccionarUsuarioEditar(usuario: Usuarios) {
+    this.usuarioEditar = { ...usuario }; 
+  }
+
+  // Método para actualizar el usuario
+  actualizarUsuario() {
+    this.usuariosServicios.actualizarUsuario(this.usuarioEditar).subscribe({
+      next: () => {
+        this.toastr.success('Usuario actualizado exitosamente', 'Éxito');
+        this.obtenerUsuarios();
+      },
+      error: (error) => {
+        console.error('Error al actualizar el usuario', error);
+        this.toastr.error('Error al actualizar el usuario', 'Error');
+      }
+    });
   }
 }
