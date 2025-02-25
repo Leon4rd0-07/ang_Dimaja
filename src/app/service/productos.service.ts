@@ -36,4 +36,8 @@ export class ProductosService {
   eliminarProducto(id: number): Observable<void> {
     return this.clienteHttp.delete<void>(`${this.urlBase}/${id}`);
   }
+  // 8. Método para actualizar un producto existente
+  actualizarProducto(producto: Productos): Observable<string> {
+    return this.clienteHttp.put<string>(this.urlBase, producto);
+  }
 }

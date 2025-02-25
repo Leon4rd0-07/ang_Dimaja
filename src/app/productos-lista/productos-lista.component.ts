@@ -16,6 +16,7 @@ export class ProductosListaComponent implements OnInit {
   categorias: any[] = [];
   selectedCategoria: any = '';
   nuevoProducto: Productos = new Productos();
+  productoEditar: Productos = new Productos(); // Para almacenar el producto a editar
 
   constructor(private productoServicio: ProductosService, private toastr: ToastrService) { }
 
@@ -81,4 +82,23 @@ export class ProductosListaComponent implements OnInit {
       }
     });
   }  
+
+  // Método para seleccionar el producto a editar
+  seleccionarProductoEditar(producto: Productos) {
+    this.productoEditar = { ...producto }; // Copia el producto seleccionado
+  }
+
+  // Método para actualizar el producto
+  actualizarProducto() {
+    this.productoServicio.actualizarProducto(this.productoEditar).subscribe({
+      next: () => {
+        this.toastr.success('Producto actualizado exitosamente', 'Éxito');
+        this.obtenerProductos();
+      },
+      error: (error) => {
+        console.error('Error al actualizar el producto', error);
+        this.toastr.error('Error al actualizar el producto', 'Error');
+      }
+    });
+  }
 }

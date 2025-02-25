@@ -36,6 +36,9 @@
                         <td>{{ producto.precio }}</td>
                         <td>{{ getCategoriaName(producto.id_categorias) }}</td>
                         <td>
+                            <button class="btn btn-primary btn-sm me-2" (click)="seleccionarProductoEditar(producto)" data-bs-toggle="modal" data-bs-target="#modalEditarProducto">
+                                <i class="bi bi-pencil"></i>
+                            </button>                            
                             <!-- Botón de eliminar con ícono -->
                             <button class="btn btn-danger btn-sm" (click)="eliminarProducto(producto.id_productos!)">
                                 <i class="bi bi-trash"></i>
@@ -102,8 +105,64 @@
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
+    <!-- Modal para Editar Producto -->
+<div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel"
+aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content shadow-lg rounded-4">
+        <div class="modal-header text-white text-center"
+            style="background: linear-gradient(135deg, #0A2647, #144272); border-top-left-radius: 12px; border-top-right-radius: 12px;">
+            <h5 class="modal-title w-100" id="modalEditarProductoLabel">Editar Producto</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+            <form (ngSubmit)="actualizarProducto()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="editNombre" class="form-label fw-bold">Nombres</label>
+                            <input type="text" class="form-control rounded-3 shadow-sm" id="editNombre"
+                                [(ngModel)]="productoEditar.nombres_productos" name="editNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editImagen" class="form-label fw-bold">Imagen</label>
+                            <input type="text" class="form-control rounded-3 shadow-sm" id="editImagen"
+                                [(ngModel)]="productoEditar.img" name="editImagen" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="editPrecio" class="form-label fw-bold">Precio</label>
+                            <input type="number" class="form-control rounded-3 shadow-sm" id="editPrecio"
+                                [(ngModel)]="productoEditar.precio" name="editPrecio" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCategoria" class="form-label fw-bold">Categoría</label>
+                            <select class="form-select rounded-3 shadow-sm" id="editCategoria"
+                                [(ngModel)]="productoEditar.id_categorias" name="editCategoria" required>
+                                <option value="">Seleccione una Categoría</option>
+                                <option *ngFor="let categoria of categorias" [value]="categoria.id_categorias">
+                                    {{ categoria.nombre_categoria }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                    <button type="submit"
+                        class="btn btn-success fw-bold rounded-3 shadow-sm me-2">Actualizar</button>
+                    <button type="button" class="btn btn-danger fw-bold rounded-3 shadow-sm"
+                        data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
