@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { ToastrService } from 'ngx-toastr'; // ✅ Importamos ngx-toastr
+import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UsuariosService } from '../service/usuarios.service';
 
 @Component({
   selector: 'app-login',
@@ -18,20 +18,24 @@ export class LoginComponent {
   error = false;
 
   constructor(
-    private authService: AuthService, 
+    private usuarioService: UsuariosService, 
     private router: Router, 
-    private toastr: ToastrService // ✅ Inyectamos ngx-toastr
+    private toastr: ToastrService 
   ) {}
 
   onLogin(): void {
     this.error = false;
 
-    if (this.authService.login(this.username, this.password)) {
-      this.toastr.success(`Bienvenido, ${this.username}!`, 'Inicio de sesión exitoso');
-      this.router.navigate(['/inicio']); 
-    } else {
-      this.error = true;
-      this.toastr.error('Usuario o contraseña incorrectos', 'Error de autenticación');
-    }
+    this.usuarioService.login(this.username, this.password).subscribe({
+      next: (response) => {
+        this.toastr.success(`Bienvenido, ${this.username}!`, 'Inicio de sesión exitoso');
+        localStorage.setItem('usuario', JSON.stringify(response.usuario)); // Guardar usuario en localStorage
+        this.router.navigate(['/inicio']); 
+      },
+      error: () => {
+        this.error = true;
+        this.toastr.error('Usuario o contraseña incorrectos', 'Error de autenticación');
+      }
+    });
   }
 }

@@ -1,0 +1,372 @@
+/* Contenedor principal */
+.container {
+  margin-left: 240px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  width: calc(100% - 240px);
+  overflow: hidden;
+}
+
+/* Contenedor de contenido */
+.content-container {
+  display: flex;
+  gap: 15px;
+}
+
+/* Panel izquierdo (búsqueda y productos) */
+.left-panel, .right-panel {
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.left-panel {
+  width: 47%;
+}
+
+.right-panel {
+  width: 50%;
+}
+
+/* Contenedor de la búsqueda mejorado */
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-container input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px 15px 10px 40px; /* Espacio para el icono */
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto al enfocar */
+.search-container input:focus {
+  border-color: #3498db;
+  box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+/* Ícono de búsqueda dentro del input */
+.search-container::before {
+  content: "\1F50D"; /* Código Unicode de la lupa 🔍 */
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #555;
+}
+
+
+/* Lista de productos con desplazamiento */
+.scrollable-list {
+  max-height: 140px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.scrollable-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 3px;
+}
+
+/* Elementos de la lista */
+.productos-list .list-group-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 14px;
+}
+
+.productos-list .list-group-item:hover {
+  background-color: #2c3e50;
+  color: white;
+}
+
+/* Asegura que la marca también cambie a blanco */
+.productos-list .list-group-item:hover .text-muted-marca {
+  color: white;
+}
+
+
+/* Tabla de productos seleccionados */
+.selected-products-table .table-container {
+  max-height: 160px;
+  overflow-y: auto;
+  margin-top: -20px;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.selected-products-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.selected-products-table th, .selected-products-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.selected-products-table th {
+  background-color: #2c3e50;
+  color: white;
+}
+
+/* Inputs de cantidad */
+.selected-products-table td input.input-cantidad {
+  width: 50px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Botones */
+.btn-success, .btn-danger, .btn-secondary {
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 14px;
+}
+
+.btn-success {
+  background-color: #27ae60;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #2ecc71;
+}
+
+.btn-secondary{
+  background-color: #e74c3c;
+  margin-left: 10px;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+
+/* Tabla de stock agregado */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table th, .custom-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.custom-table th {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.custom-table td {
+  background-color: #f9f9f9;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .content-container {
+    flex-direction: column;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+  }
+}
+
+/* Resaltar filas con stock bajo (menos de 5 unidades) */
+.low-stock {
+  color: #e74c3c; /* Rojo para filas con stock bajo */
+  font-weight: 500;
+}
+
+/* Resaltar filas con stock suficiente (5 unidades o más) */
+.stock-suficiente {
+  color: #27ae60; /* Verde más vibrante para filas con stock suficiente */
+  font-weight: 500;
+}
+
+/* Resaltar mensaje de stock bajo en rojo y en negrita */
+.stock-bajo {
+  color: red;
+  font-weight: 500;
+}
+
+
+/* Personaliza el botón de confirmación con fondo rojo */
+.btn-danger-custom {
+  background-color: red !important;
+  color: white !important;
+  border: none;
+}
+
+.btn-danger-custom:hover {
+  background-color: darkred !important;
+}
+
+/* Contenedor de la barra de herramientas */
+.stock-minimizar {
+  display: flex;
+  justify-content: space-between; /* Para colocar los elementos a los lados */
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+/* Estilo para el botón de minimización */
+.btn-minimizar {
+  background-color: #2c3e50; /* Color de fondo principal */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-size: 16px;
+}
+
+.btn-minimizar:hover {
+  background-color: #34495e; /* Un tono más oscuro al pasar el ratón */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+.btn-minimizar:active {
+  transform: scale(0.98); /* Efecto al presionar */
+}
+
+/* Título de la página */
+.header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: right; /* Alineado a la derecha */
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor del header y sus elementos */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #ecf0f1;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Estilo para la tabla y sus cabeceras */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.custom-table th, .custom-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table th {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.custom-table td {
+  background-color: #ffffff;
+}
+
+.custom-nombre_productos {
+  font-weight: bold;
+}
+
+/* Estilo para la fila del stock con color condicional */
+.text-danger {
+  color: #e74c3c;
+}
+
+.text-success {
+  color: #2ecc71;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+
+/* Estilo para la búsqueda */
+.search-box {
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #bdc3c7;
+  width: 250px;
+}
+
+
+/* Estilo para el botón de agregar nuevo producto */
+.add-button {
+  background-color: #27ae60;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #2ecc71;
+}
+
+/* Estilo para el panel izquierdo */
+.left-panel {
+  background-color: #ecf0f1; /* Fondo claro para el panel de la izquierda */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  transition: max-height 0.3s ease-in-out;
+}
+
+/* Estilo para el panel derecho */
+.right-panel {
+  background-color: #ecf0f1; /* Fondo claro para el panel de la derecha */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+

@@ -3,58 +3,100 @@ import { UsuariosService } from '../service/usuarios.service';
 import { Usuarios } from '../modelo/usuarios';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+declare var $: any; 
 
 @Component({
   selector: 'app-usuarios-lista',
   standalone: false,
   templateUrl: './usuarios-lista.component.html',
+  styleUrls: ['./usuarios-lista.component.css']
 })
 export class UsuariosListaComponent {
-  //1. Definir un arreglo de Objetos
+  modalVisible: boolean = false;
+  modalVisibleEditar: boolean = false;
   usuarios: Usuarios[] = [];
-  roles: any[] = []; // Variable para almacenar los roles
-  selectedRole: any; // Variable para el rol seleccionado
+  usuariosFiltrados: Usuarios[] = []; 
+  roles: any[] = [];
+  situacion: any[] = [];
+  selectedRole: any;
   nuevoUsuario: Usuarios = new Usuarios();
   usuarioEditar: Usuarios = new Usuarios();
+  passwordFieldType: string = 'password';
 
-  //2. Agregar el constructor
   constructor(private usuariosServicios: UsuariosService, private toastr: ToastrService) { }
 
-  //3. Definir el metodo para inicializar
   ngOnInit() {
     this.obtenerUsuarios();
-    this.obtenerRoles(); // Llamar a la función para obtener roles
+    this.obtenerRoles();
+    this.obtenerSituacion();
   }
 
-  //4. Método que obtiene la lista de usuarios
+  validarDni(event: any): void {
+    const input = event.target;
+    input.value = input.value.replace(/[^0-9]/g, '');
+  }
+
   private obtenerUsuarios() {
     this.usuariosServicios.obtenerUsuariosLista().subscribe((datos) => {
       this.usuarios = datos;
+      this.usuariosFiltrados = datos;
     });
   }
 
-  //5. Método que obtiene los roles
   private obtenerRoles() {
     this.usuariosServicios.obtenerRoles().subscribe((roles) => {
       this.roles = roles;
     });
   }
-  
-  // Método para agregar un nuevo usuario
-  guardarUsuarios() {
-    this.usuariosServicios.guardarUsuarios(this.nuevoUsuario).subscribe({
-      next: (data) => {
-        console.log('Usuario agregado:', data);
-        this.toastr.success('Usuario agregado exitosamente', 'Éxito'); // Mostrar alerta
-        this.obtenerUsuarios();
-        this.nuevoUsuario = new Usuarios();
-      },
-      error: (err) => {
-        console.error('Error al agregar usuario:', err);
-        this.toastr.error('Error al agregar el usuario', 'Error'); // Mostrar error
-      },
+
+  private obtenerSituacion(){
+    this.usuariosServicios.obtenerSituacion().subscribe((situacion) =>{
+      this.situacion = situacion;
     });
   }
+
+  filtrarUsuarios(event: any) {
+    const filtro = event.target.value.toLowerCase();
+    this.usuariosFiltrados = this.usuarios.filter(usuario => 
+      usuario.nombres.toLowerCase().includes(filtro) ||
+      usuario.apellidos.toLowerCase().includes(filtro) ||
+      usuario.correo.toLowerCase().includes(filtro) ||
+      usuario.usuario.toLowerCase().includes(filtro) ||
+      usuario.dni.toString().includes(filtro) ||
+      this.getRoleName(usuario.id_rol).toLowerCase().includes(filtro) ||
+      this.getSituacionName(usuario.id_situacion).toLowerCase().includes(filtro) 
+    );
+  }
+  
+  guardarUsuarios() {
+    this.usuariosServicios.guardarUsuarios(this.nuevoUsuario).subscribe({
+      next: () => {
+        this.toastr.success('Usuario agregado exitosamente', 'Éxito');
+        this.obtenerUsuarios();
+        this.nuevoUsuario = new Usuarios();
+        this.closeModal();
+      },
+      error: (error) => {
+        console.error('Error al agregar usuario', error);
+        this.toastr.error('Error al agregar usuario', 'Error');
+      }
+    });
+  }
+  
+  actualizarUsuario() {
+    this.usuariosServicios.actualizarUsuario(this.usuarioEditar).subscribe({
+      next: () => {
+        this.toastr.success('Usuario actualizado exitosamente', 'Éxito');
+        this.obtenerUsuarios();
+        this.closeModalEditar();
+      },
+      error: (error) => {
+        console.error('Error al actualizar el usuario', error);
+        this.toastr.error('Error al actualizar el usuario', 'Error');
+      }
+    });
+  }
+  
 
   eliminarUsuarios(id: number) {
     Swal.fire({
@@ -68,47 +110,38 @@ export class UsuariosListaComponent {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usuariosServicios.eliminarUsuarios(id).subscribe({
-          next: () => {
-            this.usuarios = this.usuarios.filter(usuarios => usuarios.id_usuarios !== id);
-            this.toastr.success('Usuario eliminado exitosamente', 'Éxito');
-          },
-          error: (error) => {
-            console.error('Error al eliminar el usuario', error);
-            this.toastr.error('Error al eliminar el usuario', 'Error');
-          }
+        this.usuariosServicios.eliminarUsuarios(id).subscribe(() => {
+          this.toastr.success('Usuario eliminado correctamente', 'Éxito');
+          this.obtenerUsuarios();
         });
       }
     });
-  }  
-
-  // Método para manejar la selección de rol
-  onRoleChange() {
-    console.log('Rol seleccionado:', this.selectedRole);  // Verificar que el rol seleccionado es correcto
   }
 
-  // Método para obtener el nombre del rol
-  getRoleName(id: number): string {
-    const role = this.roles.find(role => role.id_rol === id); // Buscar el rol por id_rol
-    return role ? role.nombre_rol : 'Desconocido'; // Si no lo encuentra, devuelve 'Desconocido'
-  }
-
-  // Método para seleccionar el usuario a editar
   seleccionarUsuarioEditar(usuario: Usuarios) {
-    this.usuarioEditar = { ...usuario }; 
+    this.usuarioEditar = { ...usuario };
+    this.modalVisibleEditar = true;
   }
 
-  // Método para actualizar el usuario
-  actualizarUsuario() {
-    this.usuariosServicios.actualizarUsuario(this.usuarioEditar).subscribe({
-      next: () => {
-        this.toastr.success('Usuario actualizado exitosamente', 'Éxito');
-        this.obtenerUsuarios();
-      },
-      error: (error) => {
-        console.error('Error al actualizar el usuario', error);
-        this.toastr.error('Error al actualizar el usuario', 'Error');
-      }
-    });
+  closeModalEditar(): void {
+    this.modalVisibleEditar = false;
+  }
+
+  openModal(): void {
+    this.modalVisible = true;
+  }
+
+  closeModal(): void {
+    this.modalVisible = false;
+  }
+
+  getRoleName(roleId: number): string {
+    const role = this.roles.find((r) => r.id_rol === roleId);
+    return role ? role.nombre_rol : 'Desconocido';
+  }
+
+  getSituacionName(situacionId: number): string{
+    const situacion = this.situacion.find((s) => s.id_situacion === situacionId);
+    return situacion ? situacion.nombre_situacion : 'Desconocido';
   }
 }

@@ -1,0 +1,107 @@
+<!-- Barra de navegación -->
+<app-navbar></app-navbar>
+
+<div class="container">
+    <h2>Agregar Nuevo Usuario</h2>
+
+    <!-- Formulario para agregar nuevo usuario -->
+    <div class="form-container">
+        <form (ngSubmit)="guardarUsuarios()">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input [(ngModel)]="nuevoUsuario.nombres" id="nombre" name="nombre" required />
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input [(ngModel)]="nuevoUsuario.apellidos" id="apellido" name="apellido" required />
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo:</label>
+                <input [(ngModel)]="nuevoUsuario.correo" id="correo" name="correo" required />
+            </div>
+            <div class="form-group">
+                <label for="usuario">Usuario:</label>
+                <input [(ngModel)]="nuevoUsuario.usuario" id="usuario" name="usuario" required />
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <div class="password-container">
+                    <input [(ngModel)]="nuevoUsuario.password" id="password" name="password" required
+                        [type]="passwordFieldType" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dni">DNI:</label>
+                <input [(ngModel)]="nuevoUsuario.dni" id="dni" name="dni" required maxlength="8"
+                    (input)="validarDni($event)" pattern="[0-9]{8}"
+                    title="El DNI debe contener solo números y 8 dígitos" />
+            </div>
+            <div class="form-group">
+                <label for="rol">Rol:</label>
+                <div class="role-container">
+                    <select [(ngModel)]="nuevoUsuario.id_rol" id="rol" name="rol" required>
+                        <option value="" disabled selected>Seleccione un rol</option>
+                        <option *ngFor="let role of roles" [value]="role.id_rol">{{ role.nombre_rol }}</option>
+                    </select>
+                    <!-- Botón para agregar nuevo rol -->
+                    <button type="button" class="add-role-button" (click)="abrirModalRol()">
+                        <i class="bx bx-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="situacion">Situacion:</label>
+                <div class="situacion-container">
+                    <select [(ngModel)]="nuevoUsuario.id_situacion" id="situacion" name="situacion" required>
+                        <option value="" disabled selected>Seleccione una Situacion</option>
+                        <option *ngFor="let situacion of situaciones" [value]="situacion.id_situacion">{{
+                            situacion.nombre_situacion }}</option>
+                    </select>
+                    <!-- Botón para agregar nuevo rol -->
+                    <button type="button" class="add-situacion-button" (click)="abrirModalSituacion()">
+                        <i class="bx bx-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="confirm-button">Agregar</button>
+                <button type="button" class="cancel-button" (click)="cancelar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para agregar rol -->
+<div *ngIf="mostrarModalRol" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="cerrarModalRol()">&times;</span>
+        <h2>Agregar Nuevo Rol</h2>
+        <div class="modal-form">
+            <div class="form-group">
+                <label for="nuevoRol">Nombre del Rol:</label>
+                <input [(ngModel)]="nuevoRol.nombre_rol" id="nuevoRol" name="nuevoRol" required />
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="confirm-button-modal" (click)="guardarRol()">Guardar</button>
+            <button class="cancel-button-modal" (click)="cerrarModalRol()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="mostrarModalSituacion" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="cerrarModalSituacion()">&times;</span>
+        <h2>Agregar Nueva Situación</h2>
+        <div class="modal-form">
+            <div class="form-group">
+                <label for="nuevaSituacion">Nombre de la Situación:</label>
+                <input [(ngModel)]="nuevaSituacion.nombre_situacion" id="nuevaSituacion" name="nuevaSituacion" required />
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="confirm-button-modal" (click)="guardarSituacion()">Guardar</button>
+            <button class="cancel-button-modal" (click)="cerrarModalSituacion()">Cancelar</button>
+        </div>
+    </div>
+</div>

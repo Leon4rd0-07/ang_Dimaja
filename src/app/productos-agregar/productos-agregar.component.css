@@ -1,0 +1,354 @@
+/* Contenedor principal */
+.container {
+  margin-left: 400px;
+  max-width: 900px;
+  width: 100%;
+  padding: 40px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Título principal */
+h2 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 32px;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+
+/* Estilo del formulario */
+.form-container {
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 200%;
+  max-width: 900px;
+  background-color: white;
+  /* Fondo blanco para el formulario */
+}
+
+/* Estructura del formulario */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Estilo de los grupos de campos */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Estilo de las etiquetas */
+label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #34495e;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Estilo de los campos de entrada (input y select) */
+
+input,
+select {
+  width: 100%;
+  /* Ocupa el 100% del espacio disponible */
+  max-width: 500px;
+  /* Aumentamos el ancho máximo de los campos */
+  padding: 16px;
+  /* Aumentamos el padding para agrandar los campos */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #34495e;
+  background-color: #ecf0f1;
+  transition: all 0.3s ease;
+}
+
+
+
+/* Estilo cuando los campos de entrada tienen foco */
+input:focus,
+select:focus {
+  border-color: #2c3e50;
+  outline: none;
+  background-color: #ffffff;
+  box-shadow: 0 0 8px rgba(44, 62, 80, 0.2);
+}
+
+/* Estilos para los botones */
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* Estilos para los botones en el formulario */
+/* Estilo del formulario */
+.form-container {
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 120%;
+  max-width: 1000px;
+  background-color: white;
+}
+
+/* Estructura del formulario con 3 columnas */
+form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 20px;
+}
+
+/* Estilo de los grupos de campos */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Estilo de las etiquetas */
+label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #34495e;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Estilo de los campos de entrada (input y select) */
+input, select {
+  width: 100%;
+  max-width: 100%; /* Ajusta al 100% dentro de la columna */
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #34495e;
+  background-color: #ecf0f1;
+  transition: all 0.3s ease;
+}
+
+/* Estilo cuando los campos de entrada tienen foco */
+input:focus, select:focus {
+  border-color: #2c3e50;
+  outline: none;
+  background-color: #ffffff;
+  box-shadow: 0 0 8px rgba(44, 62, 80, 0.2);
+}
+
+/* Botones */
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* Botón de confirmación */
+.confirm-button {
+  background-color: #2c3e50;
+  color: #fff;
+}
+
+.confirm-button:hover {
+  background-color: #34495e;
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.3);
+}
+
+/* Botón de cancelación */
+.cancel-button {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+
+.cancel-button:hover {
+  background-color: #95a5a6;
+  box-shadow: 0 2px 10px rgba(149, 165, 166, 0.3);
+}
+
+/* Alineación de los botones */
+.form-actions {
+  grid-column: span 3; /* Ocupa las 3 columnas */
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+/* Respuesta a pantallas pequeñas (adaptabilidad) */
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    /* Asegura que los botones estén a la derecha */
+    gap: 10px;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  /* Fondo más oscuro para mayor contraste */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  /* Sombra más pronunciada */
+  width: 480px;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.close:hover {
+  color: #d9534f;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.confirm-button-modal {
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-button-modal:hover {
+  background: #1a252f;
+}
+
+.cancel-button-modal {
+  background: #bdc3c7;
+  color: #2c3e50;
+  border: none;
+  padding: 10px 18px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button-modal:hover {
+  background: #a5b1b8;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-url,
+.input-file {
+  flex: 1;
+}
+
+.toggle-button {
+  cursor: pointer;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+}
+
+.preview-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.preview-img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  padding: 5px;
+  object-fit: cover;
+}
+
+.category-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.add-category-button {
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  padding: 12px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.add-category-button:hover {
+  background-color: #1a252f;
+}
+
+.add-category-button i {
+  font-size: 20px;
+}

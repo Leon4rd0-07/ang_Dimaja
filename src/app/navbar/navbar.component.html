@@ -13,22 +13,28 @@
       <li class="nav-item">
         <a class="nav-link text-white fw-bold d-flex align-items-center submenu-toggle submenu-toggle-productos"
           href="#" (click)="toggleSubmenu($event, 'productos')">
-          <i class="bi bi-box"></i> Inventario
+          <i class="bi bi-box"></i> Productos
           <i class="bi ms-auto bi-chevron-down" [ngClass]="{'open': submenuProductos}"></i>
         </a>
         <ul class="nav flex-column ms-3 submenu submenu-productos" [ngClass]="{'submenu-open': submenuProductos}">
           <li class="nav-item">
-            <a class="nav-link text-white fw-bold rounded" [routerLink]="'/productos'" routerLinkActive="active">
-              <i class="bi bi-list"></i> Lista de Productos
+            <a class="nav-link text-white fw-bold rounded" [routerLink]="'/agregar-productos'" routerLinkActive="active">
+              <i class="bi bi-bag-plus"></i> Agregar Productos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-bold rounded" [routerLink]="'/lista-productos'" routerLinkActive="active">
+              <i class="bi bi-clipboard-data"></i> Lista de Productos
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white fw-bold rounded" [routerLink]="'/stock'" routerLinkActive="active">
-              <i class="bi bi-plus-circle"></i> Agregar Stock
+              <i class="bi bi-boxes"></i> Agregar Stock
             </a>
           </li>
         </ul>
       </li>
+      
     
       <!-- Submenú Usuarios -->
       <li class="nav-item">
@@ -39,8 +45,11 @@
         </a>
         <ul class="nav flex-column ms-3 submenu submenu-usuarios" [ngClass]="{'submenu-open': submenuUsuarios}">
           <li class="nav-item">
-            <a class="nav-link text-white fw-bold rounded" [routerLink]="'/usuarios'" routerLinkActive="active">
-              <i class="bi bi-list"></i> Lista de Usuarios
+            <a class="nav-link text-white fw-bold rounded" [routerLink]="'/agregar-usuarios'" routerLinkActive="active">
+              <i class="bi bi-person-plus"></i> Agregar Usuarios
+            </a>
+            <a class="nav-link text-white fw-bold rounded" [routerLink]="'/lista-usuarios'" routerLinkActive="active">
+              <i class="bi bi-person-lines-fill"></i> Lista de Usuarios
             </a>
           </li>
         </ul>

@@ -1,0 +1,84 @@
+<!-- Barra de navegación -->
+<app-navbar></app-navbar>
+
+<div class="container">
+    <h2>Agregar Nuevo Producto</h2>
+
+    <!-- Formulario para agregar nuevo producto -->
+    <div class="form-container">
+        <form (ngSubmit)="guardarProductos()">
+            <div class="form-group">
+                <label for="nombre">Nombre del Producto:</label>
+                <input [(ngModel)]="nuevoProducto.nombres_productos" id="nombre" name="nombre" required autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="img">Imagen:</label>
+                <div class="input-container">
+                    <input *ngIf="usarUrl" type="text" [(ngModel)]="nuevoProducto.img"
+                        placeholder="Pegar URL de imagen" class="input-url form-control" name="imgUrl" />
+    
+                    <input *ngIf="!usarUrl" type="file" id="fileInput" (change)="onFileSelected($event)"
+                        accept="image/*" class="input-file form-control" name="imgFile" />
+    
+                    <button type="button" class="toggle-button btn btn-secondary" (click)="toggleInput()">
+                        <i [class]="usarUrl ? 'bx bx-refresh' : 'bx bx-upload'"></i>
+                    </button>
+                </div>
+                <div *ngIf="previewImage" class="preview-container">
+                    <img [src]="previewImage" alt="Vista previa" class="preview-img" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Marca:</label>
+                <input [(ngModel)]="nuevoProducto.marca" id="nombre" name="marca" required autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="valor_compra">Valor de Compra:</label>
+                <input [(ngModel)]="nuevoProducto.valor_compra" id="precio" name="valor_compra" required type="number" min="0" step="0.01"
+                    autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="valor_venta">Valor de Venta:</label>
+                <input [(ngModel)]="nuevoProducto.valor_venta" id="precio" name="valor_venta" required type="number" min="0" step="0.01"
+                    autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <div class="category-container">
+                    <select [(ngModel)]="nuevoProducto.id_categorias" id="categoria" name="id_categorias" required>
+                        <option [value]="null" disabled selected>Seleccione una categoría</option>
+                        <option *ngFor="let categoria of categorias" [value]="categoria.id_categorias">
+                            {{ categoria.nombre_categoria }}
+                        </option>
+                    </select>
+                    <button type="button" class="add-category-button" (click)="abrirModalCategoria()" title="Agregar nueva categoría">
+                        <i class="bx bx-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="confirm-button">Agregar</button>
+                <button type="button" class="cancel-button" (click)="cancelar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+<!-- Modal para agregar categoría -->
+<div *ngIf="mostrarModalCategoria" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="cerrarModalCategoria()">&times;</span>
+        <h2>Agregar Nueva Categoría</h2>
+        <div class="modal-form">
+            <div class="form-group">
+                <label for="nuevaCategoria">Nombre de la Categoría:</label>
+                <input [(ngModel)]="nuevaCategoria.nombre_categoria" id="nuevaCategoria" name="nuevaCategoria" required />
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="confirm-button-modal" (click)="guardarCategoria()">Guardar</button>
+            <button class="cancel-button-modal" (click)="cerrarModalCategoria()">Cancelar</button>
+        </div>
+    </div>
+</div>

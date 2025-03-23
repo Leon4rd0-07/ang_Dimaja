@@ -1,13 +1,31 @@
 <div class="login-container">
   <h2>DIMAJA</h2>
-  <div class="input-container">
-    <i class="bi bi-person-circle"></i>
-    <input type="text" [(ngModel)]="username" placeholder="Usuario">
-  </div>
-  <div class="input-container">
-    <i class="bi bi-shield-lock-fill"></i>
-    <input type="password" [(ngModel)]="password" placeholder="Contraseña">
-  </div>
-  <button (click)="onLogin()">Ingresar</button>
-</div>
 
+  <form (ngSubmit)="onLogin()">
+    <div class="input-container">
+      <i class="bi bi-person-circle"></i>
+      <input 
+        type="text" 
+        [(ngModel)]="username" 
+        name="username"
+        placeholder="Usuario"
+        required
+        aria-label="Usuario">
+    </div>
+
+    <div class="input-container">
+      <i class="bi bi-shield-lock-fill"></i>
+      <input 
+        type="password" 
+        [(ngModel)]="password" 
+        name="password"
+        placeholder="Contraseña"
+        required
+        aria-label="Contraseña">
+    </div>
+
+    <button type="submit" [disabled]="!username || !password">
+      Ingresar
+    </button>
+  </form>
+</div>

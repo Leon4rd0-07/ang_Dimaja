@@ -1,5 +1,4 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router'; // ✅ Importa Router correctamente desde @angular/router
 
@@ -14,7 +13,7 @@ export class NavbarComponent {
   submenuProductos: boolean = false;
   submenuUsuarios: boolean = false; 
   
-  constructor(private authService: AuthService, private router: Router, private eRef: ElementRef) { }
+  constructor(private router: Router, private eRef: ElementRef) { }
 
   toggleSubmenu(event: Event, menu: string): void {
     event.preventDefault();
@@ -55,7 +54,6 @@ export class NavbarComponent {
   }
 
   onLogout(): void {
-    this.authService.logout();
     this.router.navigate(['/']); // ✅ Corrige el error de Router
   }
 }
